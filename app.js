@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
-const mesroutes = require("./route/mesroutes");
+const mesroutes = require("./routes/mesroutes");
 const app = express();
 
 // motteur de visualisatio template ejs
@@ -13,7 +13,7 @@ app.use((req, res, next) => {
   const date = new Date();
   const jours = date.getDay();
   const heures = date.getHours();
-  if (jours >= 1 && jours <= 5 && heures >= 9 && heures <= 20) {
+  if (jours >= 1 && jours <= 5 && heures >= 8 && heures <= 18) {
     next();
   } else {
     console.log("serveur indisponible");
@@ -29,11 +29,9 @@ app.use((req, res, next) => {
 app.use(morgan("dev"));
 //midleware static
 app.use(express.static("public"));
-app.use((req, res) => {
-  res.render('erreur');
-});
+
 
 app.use(mesroutes)
-app.listen(3000, () => {
-  console.log("le serveur est ecouté sous http://localhost:3000");
+app.listen(3001, () => {
+  console.log("le serveur est ecouté sous http://localhost:3001");
 });
